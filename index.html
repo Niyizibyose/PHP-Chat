@@ -9,12 +9,14 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
         <script>
-        var from=null , start= 0;
-        $(document).ready(functtion(),{
+        var from=null , start= 0, url= 'https://localhost/chat.php';
+        $(document).ready(function(){
             from = prompt ("Please enter your name");
-            $('form').submit (function (e){
+            $('form').submit(function (e){
+                $.post();
+                return false
 
-            }
+            })
 
        
         })
