@@ -12,6 +12,8 @@
         var from=null , start= 0, url= 'https://localhost/chat.php';
         $(document).ready(function(){
             from = prompt ("Please enter your name");
+            load();
+
             $('form').submit(function (e){
                 $.post(url, {
                     message: $('#message').val(), 
@@ -23,7 +25,26 @@
             })
 
        
-        })
+        });
+
+        function load(){
+            $.get (url + '?start=' + start, function (result) {
+                if (result.items){
+                    result.items.forEach (item => {
+                        start = item.id;
+                        $('#messages').append(renderMessage (item));
+                    } );
+                    $('#messages').animate ({scrollTop : $('#messages')[0].scrollHeight});
+                };
+                load();
+            });
+        }
+
+        function renderMessage(item){
+            let time = new Date(item.created);
+            time = `${time.getHours()}:${time.getMinutes() <10 ? '0' :''}${time.getMinutse()}`;
+            return `<div class="msg"><p>${item.from} </p> ${item.message}<span>${time}</span></div>`;
+        }
         </script>
 
     
@@ -61,6 +82,25 @@
 
             #message{
                 flex: 2;
+            }
+
+            .msg {
+                background-color: #dcf8c6;
+                padding:5px 10px;
+                border-radius:5px;
+                margin-bottom: 8px;
+                width: fit-content;
+
+            }
+
+            .msg p {
+                margin: 0;
+                font-weight:bold;
+            }
+
+            .msg span{
+                font-size:0.7rem;
+                margin-left: 15px;
             }
         </style>
     </head>
