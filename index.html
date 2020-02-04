@@ -13,7 +13,11 @@
         $(document).ready(function(){
             from = prompt ("Please enter your name");
             $('form').submit(function (e){
-                $.post();
+                $.post(url, {
+                    message: $('#message').val(), 
+                    from : from
+                });
+                $('#message').val ('');
                 return false
 
             })
